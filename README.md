@@ -49,4 +49,9 @@ or
 -------
 
 ### Application Preview
-![Application Snapshot](app-preview.png)
+
+#### Users List
+![Application Snapshot](app-preview-1.png)
+
+#### User's detailed info
+![Application Snapshot](app-preview-2.png)
