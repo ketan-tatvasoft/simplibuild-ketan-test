@@ -10,7 +10,7 @@ import thunkMiddleware from "redux-thunk";
 import rootReducer from "../reducers";
 
 // Configuring store with default state
-export default function configureStore(initialState = {}) {
+const configureStore = (initialState = {}) => {
   const middlewares = [thunkMiddleware]
   const middlewareEnhancer = applyMiddleware(...middlewares)
 
@@ -25,3 +25,5 @@ export default function configureStore(initialState = {}) {
 
   return store;
 };
+
+export default configureStore;

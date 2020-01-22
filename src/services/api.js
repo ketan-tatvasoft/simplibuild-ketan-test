@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config';
 
-export default function API(method, endPoint, data) {
+const API = (method, endPoint, data) => {
   return axios({
     method: method,
     url: config.BASE_API_DOMAIN + endPoint,
@@ -26,4 +26,4 @@ export default function API(method, endPoint, data) {
     });
 }
 
-export { API };
+export default API;

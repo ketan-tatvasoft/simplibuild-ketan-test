@@ -3,11 +3,13 @@ import {
   GET_USERS_FAILED 
 } from "../actions/users";
 
+// Creating intial state
 const initialState = {
   data: [],
   error: ""
 };
 
+// Returning updated state
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {    
     case GET_USERS_SUCCESS:
