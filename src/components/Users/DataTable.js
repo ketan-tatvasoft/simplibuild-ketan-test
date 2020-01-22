@@ -7,9 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 // Custom components
 import EnhancedTableHead from './EnhancedTableHead';
+import UserInfoDialog from './UserInfoDialog';
 
 import {
   Avatar,
@@ -68,14 +70,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EnhancedTable = ({data}) => {
+const EnhancedTable = ({data, usersInfo}) => {
   const rows = data;
-  const classes = useStyles();
+  const classes = useStyles();  
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);  
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);  
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  // User info modal dialog
+  const [openUserInfo, setOpenUserInfo] = React.useState(false);  
+  const [selectedUserInfo, setSelectedUserInfo] = React.useState({});  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -119,7 +125,17 @@ const EnhancedTable = ({data}) => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  }; 
+  };
+  
+  const handleClickOpenUserInfo = (index, row) => {
+    setOpenUserInfo(true);
+    const findUserInfo = usersInfo.find(user => user.name.first + ' ' + user.name.last === row.name && user.location.city === row.city && user.location.state === row.state)
+    setSelectedUserInfo(findUserInfo);    
+  };
+
+  const handleCloseUserInfo = () => {
+    setOpenUserInfo(false);
+  };
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
@@ -167,6 +183,11 @@ const EnhancedTable = ({data}) => {
                       </TableCell>
                       <TableCell>{row.city}</TableCell>
                       <TableCell>{row.state}</TableCell>                      
+                      <TableCell>
+                        <Button variant="contained" color="primary" onClick={() => handleClickOpenUserInfo(index, row)}>
+                          More
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -187,6 +208,13 @@ const EnhancedTable = ({data}) => {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+
+        {/* User Info Dialog */}
+          <UserInfoDialog 
+            openUserInfo={openUserInfo}
+            handleCloseUserInfo={handleCloseUserInfo}
+            info={selectedUserInfo}
+          />        
       </Paper>
     </div>
   );

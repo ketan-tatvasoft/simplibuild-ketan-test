@@ -21,15 +21,11 @@ const App = () => {
 
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
-  const [loader, setloader] = useState(false);
+  const [loader, setloader] = useState(false);  
 
-  useEffect(() => {  
-    // ~~~ Get Users from API ~~~
-    setloader(true);
-    getUsers(100)
-    .then(res => {
-      const userInfo = res.results && res.results.length ? (
-        res.results.map((item) => {
+  // User Table Data
+  const userTableData = users.data.length ? (
+        users.data.map((item) => {
           return {
             profileImage : item.picture.thumbnail,
             name: item.name.first + ' ' + item.name.last,
@@ -37,9 +33,15 @@ const App = () => {
             state: item.location.state
           }
         })
-      ) : [];    
+      ) : [];
+
+  useEffect(() => {  
+    // ~~~ Get Users from API ~~~
+    setloader(true);
+    getUsers(100)
+    .then(res => {
       setloader(false);
-      dispatch(getUsersSuccess(userInfo));
+      dispatch(getUsersSuccess(res.results && res.results.length ? res.results : []));
     })
     .catch(error => {
       setloader(false);
@@ -52,7 +54,8 @@ const App = () => {
       <Container>          
         <TopBar />          
         <Users 
-          users={users.data}
+          users={userTableData}
+          usersInfo={users.data}
           loader={loader}
         />
       </Container>

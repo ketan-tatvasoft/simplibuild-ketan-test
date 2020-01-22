@@ -16,7 +16,7 @@ import {
   dataTable,
 } from "./styles";
 
-const Users = ({users, loader}) => { 
+const Users = ({users, usersInfo, loader}) => { 
   const spinnerCSS = spinner();
   const dataTableCSS = dataTable();  
   
@@ -28,7 +28,10 @@ const Users = ({users, loader}) => {
 
       <div className={dataTableCSS.customCSS}>
         {users.length ? (
-          <DataTable data={users} />
+          <DataTable 
+            data={users}
+            usersInfo={usersInfo}
+          />
         ) : !loader && (                          
             <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="grey.300">
               <h2>No Records Found !</h2>                

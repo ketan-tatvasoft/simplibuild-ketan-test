@@ -13,6 +13,7 @@ const headCells = [
   { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
   { id: 'city', numeric: true, disablePadding: false, label: 'City' },
   { id: 'state', numeric: true, disablePadding: false, label: 'State' },  
+  { id: 'action', numeric: true, disablePadding: false, label: 'Actions' },  
 ];
 
 const EnhancedTableHead = (props) => {
